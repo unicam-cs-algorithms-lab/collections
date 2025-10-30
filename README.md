@@ -1,1 +1,1 @@
-## Codice associato alle slides su recall di Java e Object Oriented Programming
+## Codice associato alle slides sulle Collections della Java SE
