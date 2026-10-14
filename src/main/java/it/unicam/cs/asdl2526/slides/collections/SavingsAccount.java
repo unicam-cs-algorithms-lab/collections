@@ -1,4 +1,5 @@
 /**
+     * Documenta il contratto dell’operazione operazione.
  * 
  */
 package it.unicam.cs.asdl2526.slides.collections;
@@ -78,6 +79,7 @@ public class SavingsAccount extends BankAccount {
     }
 
     /**
+     * Documenta il contratto dell’operazione getInterestRate.
      * @return the interestRate
      */
     public double getInterestRate() {

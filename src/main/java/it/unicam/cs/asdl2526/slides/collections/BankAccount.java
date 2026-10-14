@@ -17,6 +17,7 @@ public abstract class BankAccount implements Comparable<BankAccount> {
 
     private String nome;
 
+    // Chiave logica stabile: equals, hashCode e compareTo usano questo campo.
     private final String iban;
 
     /**
@@ -44,9 +45,8 @@ public abstract class BankAccount implements Comparable<BankAccount> {
      */
     public static final Comparator<BankAccount> ORDINA_PER_SALDO = new Comparator<BankAccount>() {
         public int compare(BankAccount b1, BankAccount b2) {
-            Double bb1 = new Double(b1.saldo);
-            Double bb2 = new Double(b2.saldo);
-            int c = bb1.compareTo(bb2);
+            // Double.compare evita la creazione di oggetti involucro.
+            int c = Double.compare(b1.saldo, b2.saldo);
             if (c != 0)
                 return c;
             else
@@ -80,35 +80,36 @@ public abstract class BankAccount implements Comparable<BankAccount> {
     }
 
     /**
-     * @return the nome
-     */
+     * Restituisce il nome dell’intestatario. @return il nome dell'intestatario, modificabile e non parte della chiave logica */
     public String getNome() {
         return nome;
     }
 
     /**
-     * @param nome
-     *                 the nome to set
-     */
+     * Modifica il nome dell’intestatario. @param nome nuovo intestatario; non cambia l'identità del conto */
     public void setNome(String nome) {
         this.nome = nome;
     }
 
     /**
-     * @return the saldo
-     */
+     * Restituisce il saldo corrente. @return il saldo corrente, che non identifica il conto */
     public double getSaldo() {
         return saldo;
     }
 
     /**
-     * @return the iban
-     */
+     * Restituisce l’identificativo immutabile del conto. @return l'IBAN, chiave logica immutabile del conto */
     public String getIban() {
         return iban;
     }
 
-    /*
+    /**
+     * Due conti sono logicamente uguali se hanno lo stesso IBAN,
+     * anche se appartengono a sottoclassi differenti o hanno saldo diverso.
+     * <p>La chiave immutabile mantiene stabile l'uguaglianza.
+     * @param obj oggetto da confrontare
+     * @return true se obj è un BankAccount con lo stesso IBAN
+     *
      * L'equals di conti correnti si basa sull'iban, identificatore unico
      * immutabile
      * 
@@ -131,7 +132,10 @@ public abstract class BankAccount implements Comparable<BankAccount> {
         return true;
     }
 
-    /*
+    /**
+     * Restituisce un codice hash basato sull'IBAN, coerente con equals.
+     * @return codice hash del conto
+     *
      * L'hashcode viene calcolato a partire dall'iban, in accordo con equals.
      * 
      * @see java.lang.Object#hashCode()
@@ -191,8 +195,11 @@ public abstract class BankAccount implements Comparable<BankAccount> {
 
     }
 
-    /*
-     * L'ordinamento tra conti correnti segue l'ordinamento delle stringhe iban.
+    /**
+     * Confronta i conti per IBAN in ordine lessicografico.
+     * @param other conto da confrontare
+     * @return negativo, zero o positivo secondo l'ordine degli IBAN
+     * @throws NullPointerException se other è null
      */
     @Override
     public int compareTo(BankAccount other) {

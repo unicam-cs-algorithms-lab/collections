@@ -1,4 +1,5 @@
 /**
+     * Documenta il contratto dell’operazione operazione.
  * 
  */
 package it.unicam.cs.asdl2526.slides.collections;
@@ -13,40 +14,41 @@ package it.unicam.cs.asdl2526.slides.collections;
 public class BankDimensionException extends RuntimeException {
 
     /**
+     * Documenta il contratto dell’operazione BankDimensionException.
      * 
      */
     private static final long serialVersionUID = 6741919390005964432L;
 
     /**
+     * Documenta il contratto dell’operazione BankDimensionException.
      * 
      */
     public BankDimensionException() {
-        // TODO Auto-generated constructor stub
     }
 
     /**
+     * Documenta il contratto dell’operazione BankDimensionException.
      * @param message
      */
     public BankDimensionException(String message) {
         super(message);
-        // TODO Auto-generated constructor stub
     }
 
     /**
+     * Documenta il contratto dell’operazione BankDimensionException.
      * @param cause
      */
     public BankDimensionException(Throwable cause) {
         super(cause);
-        // TODO Auto-generated constructor stub
     }
 
     /**
+     * Documenta il contratto dell’operazione BankDimensionException.
      * @param message
      * @param cause
      */
     public BankDimensionException(String message, Throwable cause) {
         super(message, cause);
-        // TODO Auto-generated constructor stub
     }
 
 }

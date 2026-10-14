@@ -1,4 +1,5 @@
 /**
+     * Documenta il contratto dell’operazione operazione.
  * 
  */
 package it.unicam.cs.asdl2526.slides.collections;

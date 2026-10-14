@@ -50,6 +50,7 @@ public class BankArray {
     }
 
     /**
+     * Documenta il contratto dell’operazione getName.
      * @return the name
      */
     public String getName() {
@@ -65,6 +66,7 @@ public class BankArray {
     }
 
     /**
+     * Documenta il contratto dell’operazione getAddress.
      * @return the address
      */
     public String getAddress() {
@@ -80,6 +82,7 @@ public class BankArray {
     }
 
     /**
+     * Documenta il contratto dell’operazione getSwiftCode.
      * @return the swiftCode
      */
     public String getSwiftCode() {

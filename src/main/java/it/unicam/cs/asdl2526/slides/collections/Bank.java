@@ -6,7 +6,11 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Banca che gestisce la collezione di accounts con una List.
+ * Archivio di conti che usa il contratto {@link java.util.List} e
+ * l'implementazione {@link java.util.ArrayList}.
+ * <p>La lista ammetterebbe duplicati, ma {@link #insert(BankAccount)}
+ * li rifiuta secondo l'uguaglianza logica definita dall'IBAN.
+ * La sequenza conserva un ordine, che può essere modificato dai metodi di ordinamento.
  * 
  * @author Luca Tesei
  *
@@ -19,6 +23,7 @@ public class Bank {
 
     private String address;
 
+    // Programmiamo rispetto all'interfaccia List, non alla classe ArrayList.
     private List<BankAccount> accounts;
 
     /**
@@ -42,38 +47,31 @@ public class Bank {
     }
 
     /**
-     * @return the name
-     */
+     * Documenta il contratto dell’operazione getName. @return il nome corrente della banca, che può essere modificato */
     public String getName() {
         return name;
     }
 
     /**
-     * @param name
-     *                 the name to set
-     */
+     * Documenta il contratto dell’operazione setName. @param name nuovo nome della banca */
     public void setName(String name) {
         this.name = name;
     }
 
     /**
-     * @return the address
-     */
+     * Documenta il contratto dell’operazione getAddress. @return l'indirizzo corrente della banca */
     public String getAddress() {
         return address;
     }
 
     /**
-     * @param address
-     *                    the address to set
-     */
+     * Documenta il contratto dell’operazione setAddress. @param address nuovo indirizzo della banca */
     public void setAddress(String address) {
         this.address = address;
     }
 
     /**
-     * @return the swiftCode
-     */
+     * Documenta il contratto dell’operazione getSwiftCode. @return l'identificativo immutabile della banca */
     public String getSwiftCode() {
         return swiftCode;
     }
@@ -120,9 +118,6 @@ public class Bank {
      * @return true se l'inserimento è avvenuto, false se il conto è già
      *         presente in questa banca e quindi non può essere reinserito.
      * 
-     * @throws BankDimensionException
-     *                                    se il numero massimo dei accounts per
-     *                                    questa banca è stato raggiunto
      */
     public boolean insert(BankAccount b) {
         // nelle List sono consentiti elementi duplicati, quindi devo prima
@@ -226,7 +221,8 @@ public class Bank {
                 toAdd.add(new CheckingAccount(vecchioSaldo, b.getNome(), b.getIban()));
             }
         }
-        // inserisco tutti i conti accumulati dopo che l'iterazione è finita
+        // La nuova lista viene accodata: non si conservano le posizioni originarie.
+        // Inserire nella lista percorsa invaliderebbe l'iteratore fail-fast.
         this.accounts.addAll(toAdd);
     }
 
@@ -251,6 +247,8 @@ public class Bank {
      *         iban
      */
     public String getAccountDescriptionsByIban() {
+        // Collections.sort modifica la lista originale (non una copia).
+        // L'ordine naturale è definito da BankAccount.compareTo, cioè dall'IBAN.
         // Ordino la lista in base all'ordinamento naturale
         Collections.sort(this.accounts);
         return getAccountDescriptions();
